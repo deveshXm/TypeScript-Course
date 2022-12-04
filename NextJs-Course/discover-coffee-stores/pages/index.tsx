@@ -1,12 +1,26 @@
 import Head from "next/head";
+import Image from "next/image";
 import Banner from "../components/banner";
 import styles from "../styles/Home.module.css";
 
-export default function Home() {
+interface Image {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+}
 
-  const handleOnBannerBtnClick = ():void =>  {
-    console.log("click")
-  }
+const IndexProps: Image = {
+  src: "/static/hero-image.png",
+  width: 700,
+  height: 400,
+  alt: "hero-image",
+};
+
+export default function Home() {
+  const handleOnBannerBtnClick = (): void => {
+    console.log("click");
+  };
 
   return (
     <div className={styles.container}>
@@ -16,7 +30,18 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <Banner buttonText={"View stores nearby"} handleOnClick={handleOnBannerBtnClick}/>
+        <Banner
+          buttonText={"View stores nearby"}
+          handleOnClick={handleOnBannerBtnClick}
+        />
+        <div className={styles.heroImage}>
+          <Image
+            src={IndexProps.src}
+            width={IndexProps.width}
+            height={IndexProps.height}
+            alt={IndexProps.alt}
+          />
+        </div>
       </main>
 
       <footer className={styles.footer}></footer>
