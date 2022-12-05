@@ -6,24 +6,29 @@ import Image from "next/image";
 import Card from "../components/card";
 import Banner from "../components/banner";
 
-// CSS //
+// Extras //
+import { image, data } from "../types/types";
 import styles from "../styles/Home.module.css";
+import coffeeStores from "../data/coffee-stores.json";
 
-interface Image {
-  src: string;
-  width: number;
-  height: number;
-  alt: string;
-}
-
-const IndexProps: Image = {
+const IndexProps: image = {
   src: "/static/hero-image.png",
   width: 700,
   height: 400,
   alt: "hero-image",
 };
 
-export default function Home() {
+export async function getStaticProps(context:unknown){
+  return{
+    props:{
+      coffeeStores,
+    }
+  }
+}
+
+export default function Home(props:data[]) {
+
+  console.log(props)
   const handleOnBannerBtnClick = (): void => {
     console.log("click");
   };
@@ -47,7 +52,18 @@ export default function Home() {
             height={IndexProps.height}
             alt={IndexProps.alt}
           />
-          <Card/>
+          <div className={styles.cardLayout}>
+            {coffeeStores.map((coffeeStore) => {
+              return (
+                <Card
+                  key={coffeeStore.id}
+                  name={coffeeStore.name}
+                  imgUrl={coffeeStore.imgUrl}
+                  href={`/coffee-store/${coffeeStore.id}`}
+                />
+              );
+            })}
+          </div>
         </div>
       </main>
 
@@ -55,3 +71,4 @@ export default function Home() {
     </div>
   );
 }
+
