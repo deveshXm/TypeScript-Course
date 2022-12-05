@@ -1,6 +1,12 @@
+// Libraries //
 import Head from "next/head";
 import Image from "next/image";
+
+// Components //
+import Card from "../components/card";
 import Banner from "../components/banner";
+
+// CSS //
 import styles from "../styles/Home.module.css";
 
 interface Image {
@@ -41,6 +47,7 @@ export default function Home() {
             height={IndexProps.height}
             alt={IndexProps.alt}
           />
+          <Card/>
         </div>
       </main>
 
