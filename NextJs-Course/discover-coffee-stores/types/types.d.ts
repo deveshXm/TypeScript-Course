@@ -6,12 +6,16 @@ interface image {
 }
 
 interface data {
-  id:number,
-  name:string,
-  imgUrl:string,
-  websiteUrl:string,
-  address:string,
-  neighbourhood:string
+  id: number;
+  name: string;
+  imgUrl: string;
+  websiteUrl: string;
+  address: string;
+  neighbourhood: string;
 }
 
-export {image,data}
+interface coffeeStoreProps {
+  coffeeStores: data & data[];
+}
+
+export { image, data, coffeeStoreProps };

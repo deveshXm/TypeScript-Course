@@ -8,13 +8,9 @@ import Card from "../components/card";
 import Banner from "../components/banner";
 
 // Extras //
-import { image, data } from "../types/types";
+import { image, data, coffeeStoreProps } from "../types/types";
 import styles from "../styles/Home.module.css";
 import coffeeStoresData from "../data/coffee-stores.json";
-
-interface Props {
-  coffeeStores: data[];
-};
 
 const IndexProps: image = {
   src: "/static/hero-image.png",
@@ -31,7 +27,7 @@ export async function getStaticProps(context: string){
   };
 }
 
-export default function Home(props: Props) {
+export default function Home(props: coffeeStoreProps) {
   const handleOnBannerBtnClick = (): void => {
     console.log("click");
   };
