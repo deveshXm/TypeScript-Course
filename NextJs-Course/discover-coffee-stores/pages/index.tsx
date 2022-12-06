@@ -12,6 +12,10 @@ import { image, data } from "../types/types";
 import styles from "../styles/Home.module.css";
 import coffeeStoresData from "../data/coffee-stores.json";
 
+interface Props {
+  coffeeStores: data[];
+};
+
 const IndexProps: image = {
   src: "/static/hero-image.png",
   width: 700,
@@ -27,7 +31,7 @@ export async function getStaticProps(context: string){
   };
 }
 
-export default function Home(props:InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Home(props: Props) {
   const handleOnBannerBtnClick = (): void => {
     console.log("click");
   };
