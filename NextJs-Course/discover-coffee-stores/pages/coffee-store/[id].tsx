@@ -4,26 +4,28 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-import coffeeStoresData from "../../data/coffee-stores.json";
 import { coffeeStoreProps } from "../../types/types";
+import fetchCoffeeStores from "../../lib/coffee-store";
 
 import styles from "../../styles/coffee-store.module.css";
 
-export function getStaticProps({ params }: any) {
+export async function getStaticProps({ params }: any) {
+  const coffeeStores = await fetchCoffeeStores();
   return {
     props: {
-      coffeeStores: coffeeStoresData.find((coffeeStore) => {
-        return coffeeStore.id.toString() === params.id;
+      coffeeStores: coffeeStores.find((coffeeStore:any) => {
+        return coffeeStore.fsq_id.toString() === params.id;
       }),
     },
   };
 }
 
-export function getStaticPaths() {
-  const paths = coffeeStoresData.map((coffeeStore) => {
+export async function getStaticPaths() {
+  const coffeeStores = await fetchCoffeeStores();
+  const paths = coffeeStores.map((coffeeStore:any) => {
     return {
       params: {
-        id: coffeeStore.id.toString(),
+        id: coffeeStore.fsq_id.toString(),
       },
     };
   });
@@ -33,7 +35,7 @@ export function getStaticPaths() {
   };
 }
 
-export default function CoffeeStore(props: coffeeStoreProps) {
+export default function CoffeeStore(props:any) {
   const router = useRouter();
 
   if (router.isFallback) {

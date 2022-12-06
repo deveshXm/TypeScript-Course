@@ -1,16 +1,15 @@
 // Libraries //
 import Head from "next/head";
 import Image from "next/image";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
 
 // Components //
 import Card from "../components/card";
 import Banner from "../components/banner";
 
 // Extras //
-import { image, data, coffeeStoreProps } from "../types/types";
+import { image } from "../types/types";
 import styles from "../styles/Home.module.css";
-import coffeeStoresData from "../data/coffee-stores.json";
+import fetchCoffeeStores from "../lib/coffee-store";
 
 const IndexProps: image = {
   src: "/static/hero-image.png",
@@ -19,18 +18,23 @@ const IndexProps: image = {
   alt: "hero-image",
 };
 
-export async function getStaticProps(context: string){
+export async function getStaticProps(context: string) {
+
+  const coffeeStores = await fetchCoffeeStores() ;
+
   return {
     props: {
-      coffeeStores: coffeeStoresData,
+      coffeeStores,
     },
   };
 }
 
-export default function Home(props: coffeeStoreProps) {
+export default function Home(props: any) {
   const handleOnBannerBtnClick = (): void => {
     console.log("click");
   };
+
+  
 
   return (
     <div className={styles.container}>
@@ -56,10 +60,10 @@ export default function Home(props: coffeeStoreProps) {
               <h2 className={styles.heading2}>Toronto Store</h2>
 
               <div className={styles.cardLayout}>
-                {props.coffeeStores.map((coffeeStore: data) => {
+                {props.coffeeStores.map((coffeeStore:any) => {
                   return (
                     <Card
-                      key={coffeeStore.id}
+                      key={coffeeStore.fsq_id}
                       name={coffeeStore.name}
                       imgUrl={coffeeStore.imgUrl}
                       href={`/coffee-store/${coffeeStore.id}`}

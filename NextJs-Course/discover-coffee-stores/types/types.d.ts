@@ -18,4 +18,5 @@ interface coffeeStoreProps {
   coffeeStores: data & data[];
 }
 
+
 export { image, data, coffeeStoreProps };
