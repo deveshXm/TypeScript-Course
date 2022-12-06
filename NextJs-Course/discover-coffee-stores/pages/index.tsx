@@ -18,17 +18,16 @@ const IndexProps: image = {
   alt: "hero-image",
 };
 
-export async function getStaticProps(context:unknown){
-  return{
-    props:{
+export async function getStaticProps(context: unknown) {
+  return {
+    props: {
       coffeeStores,
-    }
-  }
+    },
+  };
 }
 
-export default function Home(props:data[]) {
-
-  console.log(props)
+export default function Home(props: data[]) {
+  console.log(props);
   const handleOnBannerBtnClick = (): void => {
     console.log("click");
   };
@@ -52,18 +51,24 @@ export default function Home(props:data[]) {
             height={IndexProps.height}
             alt={IndexProps.alt}
           />
-          <div className={styles.cardLayout}>
-            {coffeeStores.map((coffeeStore) => {
-              return (
-                <Card
-                  key={coffeeStore.id}
-                  name={coffeeStore.name}
-                  imgUrl={coffeeStore.imgUrl}
-                  href={`/coffee-store/${coffeeStore.id}`}
-                />
-              );
-            })}
-          </div>
+          {coffeeStores.length > 0 && (
+            <>
+              <h2 className={styles.heading2}>Toronto Store</h2>
+
+              <div className={styles.cardLayout}>
+                {coffeeStores.map((coffeeStore) => {
+                  return (
+                    <Card
+                      key={coffeeStore.id}
+                      name={coffeeStore.name}
+                      imgUrl={coffeeStore.imgUrl}
+                      href={`/coffee-store/${coffeeStore.id}`}
+                    />
+                  );
+                })}
+              </div>
+            </>
+          )}
         </div>
       </main>
 
@@ -71,4 +76,3 @@ export default function Home(props:data[]) {
     </div>
   );
 }
-
