@@ -12,8 +12,8 @@ export async function getStaticProps({ params }: any) {
   const coffeeStore = await fetchCoffeeStores();
   return {
     props: {
-      coffeeStores: coffeeStore.find((coffeeStore:any) => {
-        return coffeeStore.fsq_id.toString() === params.id;
+      coffeeStores: coffeeStore.find((coffeeStore: any) => {
+        return coffeeStore.id.toString() === params.id;
       }),
     },
   };
@@ -21,10 +21,10 @@ export async function getStaticProps({ params }: any) {
 
 export async function getStaticPaths() {
   const coffeeStore = await fetchCoffeeStores();
-  const paths = coffeeStore.map((coffeeStore:any) => {
+  const paths = coffeeStore.map((coffeeStore: any) => {
     return {
       params: {
-        id: coffeeStore.fsq_id.toString(),
+        id: coffeeStore.id.toString(),
       },
     };
   });
@@ -34,18 +34,18 @@ export async function getStaticPaths() {
   };
 }
 
-export default function CoffeeStore(props:any) {
+export default function CoffeeStore(props: any) {
   const router = useRouter();
 
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
 
-  const { location, name, imgUrl } = props.coffeeStores;
+  const { name, address, neighborhood, imgUrl } = props.coffeeStores;
 
   const handleUpvoteButtion = () => {
     console.log("handle upvote");
-  }
+  };
 
   return (
     <div className={styles.layout}>
@@ -55,7 +55,7 @@ export default function CoffeeStore(props:any) {
       <div className={styles.container}>
         <div className={styles.col1}>
           <div className={styles.backToHomeLink}>
-            <Link href="/">Back to home</Link>
+            <Link href="/">{"⬅ Back to home"}</Link>
           </div>
           <div className={styles.nameWrapper}>
             <p className={styles.name}>{name}</p>
@@ -69,19 +69,40 @@ export default function CoffeeStore(props:any) {
           ></Image>
         </div>
         <div className={cls("glass", styles.col2)}>
+          {address && (
+            <div className={styles.iconWrapper}>
+              <Image
+                src="/static/icons/places.svg"
+                width="24"
+                height="24"
+                alt={address}
+              ></Image>
+              <p className={styles.text}>{address}</p>
+            </div>
+          )}
+          {neighborhood && (
+            <div className={styles.iconWrapper}>
+              <Image
+                src="/static/icons/nearMe.svg"
+                width="24"
+                height="24"
+                alt={neighborhood}
+              ></Image>
+              <p className={styles.text}>{neighborhood}</p>
+            </div>
+          )}
           <div className={styles.iconWrapper}>
-            <Image src="/static/icons/places.svg" width="24" height="24" alt={location.address}></Image>
-            <p className={styles.text}>{location.address}</p>
-          </div>
-          <div className={styles.iconWrapper}>
-            <Image src="/static/icons/nearMe.svg" width="24" height="24" alt={location.neighborhood}></Image>
-            <p className={styles.text}>{location.neighborhood}</p>
-          </div>
-          <div className={styles.iconWrapper}>
-            <Image src="/static/icons/star.svg" width="24" height="24" alt={"1"}></Image>
+            <Image
+              src="/static/icons/star.svg"
+              width="24"
+              height="24"
+              alt={"1"}
+            ></Image>
             <p className={styles.text}>1</p>
           </div>
-          <button className={styles.upvoteButton} onClick={handleUpvoteButtion}>Up vote!</button>
+          <button className={styles.upvoteButton} onClick={handleUpvoteButtion}>
+            Up vote!
+          </button>
         </div>
       </div>
     </div>

@@ -38,8 +38,11 @@ export default function Home(props: any) {
       <Head>
         <title>Coffee Connoisseur</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta
+          name="description"
+          content="allows you to discover coffee stores"
+        />
       </Head>
-
       <main className={styles.main}>
         <Banner
           buttonText={"View stores nearby"}
@@ -52,28 +55,26 @@ export default function Home(props: any) {
             height={IndexProps.height}
             alt={IndexProps.alt}
           />
-          {props.coffeeStores.length > 0 && (
-            <>
-              <h2 className={styles.heading2}>Toronto Store</h2>
-
-              <div className={styles.cardLayout}>
-                {props.coffeeStores.map((coffeeStore: any) => {
-                  return (
-                    <Card
-                      key={coffeeStore.fsq_id}
-                      name={coffeeStore.name}
-                      imgUrl={coffeeStore.imgUrl}
-                      href={`/coffee-store/${coffeeStore.fsq_id}`}
-                    />
-                  );
-                })}
-              </div>
-            </>
-          )}
         </div>
+        <div className={styles.sectionWrapper} />
+        {props.coffeeStores.length > 0 && (
+          <>
+            <h2 className={styles.heading2}>Toronto stores</h2>
+            <div className={styles.cardLayout}>
+              {props.coffeeStores.map((coffeeStore: any) => {
+                return (
+                  <Card
+                    key={coffeeStore.id}
+                    name={coffeeStore.name}
+                    imgUrl={coffeeStore.imgUrl}
+                    href={`/coffee-store/${coffeeStore.id}`}
+                  />
+                );
+              })}
+            </div>
+          </>
+        )}
       </main>
-
-      <footer className={styles.footer}></footer>
     </div>
   );
 }

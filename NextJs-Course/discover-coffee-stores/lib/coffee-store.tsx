@@ -41,9 +41,13 @@ export default async function fetchCoffeeStores() {
   const data = await response.json();
 
   return data.results.map((result: any, idx: number) => {
+    const neighbor = result.location.neighborhood;
     return {
-      ...result,
-      imgUrl: photos[idx],
+      id: result.fsq_id,
+      name : result.name,
+      address: result.location.address === undefined ? "" : result.location.address,
+      neighborhood: neighbor === undefined ? "" : neighbor[0],
+      imgUrl: photos.length > 0 ? photos[idx] : null,
     };
   });
 }
