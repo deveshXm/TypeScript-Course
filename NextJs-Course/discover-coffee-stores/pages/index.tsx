@@ -19,8 +19,7 @@ const IndexProps: image = {
 };
 
 export async function getStaticProps(context: string) {
-
-  const coffeeStores = await fetchCoffeeStores() ;
+  const coffeeStores = await fetchCoffeeStores();
 
   return {
     props: {
@@ -33,8 +32,6 @@ export default function Home(props: any) {
   const handleOnBannerBtnClick = (): void => {
     console.log("click");
   };
-
-  
 
   return (
     <div className={styles.container}>
@@ -60,13 +57,13 @@ export default function Home(props: any) {
               <h2 className={styles.heading2}>Toronto Store</h2>
 
               <div className={styles.cardLayout}>
-                {props.coffeeStores.map((coffeeStore:any) => {
+                {props.coffeeStores.map((coffeeStore: any) => {
                   return (
                     <Card
                       key={coffeeStore.fsq_id}
                       name={coffeeStore.name}
                       imgUrl={coffeeStore.imgUrl}
-                      href={`/coffee-store/${coffeeStore.id}`}
+                      href={`/coffee-store/${coffeeStore.fsq_id}`}
                     />
                   );
                 })}

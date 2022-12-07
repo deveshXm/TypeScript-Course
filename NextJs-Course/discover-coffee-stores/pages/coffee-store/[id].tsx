@@ -4,16 +4,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-import { coffeeStoreProps } from "../../types/types";
 import fetchCoffeeStores from "../../lib/coffee-store";
 
 import styles from "../../styles/coffee-store.module.css";
 
 export async function getStaticProps({ params }: any) {
-  const coffeeStores = await fetchCoffeeStores();
+  const coffeeStore = await fetchCoffeeStores();
   return {
     props: {
-      coffeeStores: coffeeStores.find((coffeeStore:any) => {
+      coffeeStores: coffeeStore.find((coffeeStore:any) => {
         return coffeeStore.fsq_id.toString() === params.id;
       }),
     },
@@ -21,8 +20,8 @@ export async function getStaticProps({ params }: any) {
 }
 
 export async function getStaticPaths() {
-  const coffeeStores = await fetchCoffeeStores();
-  const paths = coffeeStores.map((coffeeStore:any) => {
+  const coffeeStore = await fetchCoffeeStores();
+  const paths = coffeeStore.map((coffeeStore:any) => {
     return {
       params: {
         id: coffeeStore.fsq_id.toString(),
@@ -42,7 +41,7 @@ export default function CoffeeStore(props:any) {
     return <div>Loading...</div>;
   }
 
-  const { address, name, neighbourhood, imgUrl } = props.coffeeStores;
+  const { location, name, imgUrl } = props.coffeeStores;
 
   const handleUpvoteButtion = () => {
     console.log("handle upvote");
@@ -71,12 +70,12 @@ export default function CoffeeStore(props:any) {
         </div>
         <div className={cls("glass", styles.col2)}>
           <div className={styles.iconWrapper}>
-            <Image src="/static/icons/places.svg" width="24" height="24" alt={address}></Image>
-            <p className={styles.text}>{address}</p>
+            <Image src="/static/icons/places.svg" width="24" height="24" alt={location.address}></Image>
+            <p className={styles.text}>{location.address}</p>
           </div>
           <div className={styles.iconWrapper}>
-            <Image src="/static/icons/nearMe.svg" width="24" height="24" alt={neighbourhood}></Image>
-            <p className={styles.text}>{neighbourhood}</p>
+            <Image src="/static/icons/nearMe.svg" width="24" height="24" alt={location.neighborhood}></Image>
+            <p className={styles.text}>{location.neighborhood}</p>
           </div>
           <div className={styles.iconWrapper}>
             <Image src="/static/icons/star.svg" width="24" height="24" alt={"1"}></Image>
