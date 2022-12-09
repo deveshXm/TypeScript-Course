@@ -10,11 +10,12 @@ import styles from "../../styles/coffee-store.module.css";
 
 export async function getStaticProps({ params }: any) {
   const coffeeStore = await fetchCoffeeStores();
+  const findCoffeeStoreById = coffeeStore.find((store:any) => {
+    return store.id.toString() === params.id;
+  })
   return {
     props: {
-      coffeeStores: coffeeStore.find((coffeeStore: any) => {
-        return coffeeStore.id.toString() === params.id;
-      }),
+      coffeeStores: findCoffeeStoreById ? findCoffeeStoreById : {},
     },
   };
 }
@@ -30,7 +31,7 @@ export async function getStaticPaths() {
   });
   return {
     paths,
-    fallback: false, // can also be true or 'blocking'
+    fallback: true, // can also be true or 'blocking'
   };
 }
 
