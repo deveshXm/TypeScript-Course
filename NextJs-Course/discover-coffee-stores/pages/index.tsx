@@ -11,7 +11,8 @@ import { image } from "../types/types";
 import styles from "../styles/Home.module.css";
 import fetchCoffeeStores from "../lib/coffee-store";
 import useTrackLocation from "../hooks/use-track-location";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { ACTION_TYPES, StoreContext } from "./_app";
 
 const IndexProps: image = {
   src: "/static/hero-image.png",
@@ -31,18 +32,27 @@ export async function getStaticProps(context: string) {
 }
 
 export default function Home(props: any) {
-  const { handleTrackLocation, latLong, locationErrorMsg, isFindingLocation } =
+  const { handleTrackLocation, locationErrorMsg, isFindingLocation } =
     useTrackLocation();
-  const [coffeeStores, setCoffeeStores] = useState([]);
+  // const [coffeeStores, setCoffeeStores] = useState([]);
   const [coffeeStoresError, setCoffeeStoresError] = useState(null);
+  const {dispatch, state} = useContext(StoreContext);
+  const {coffeeStores, latLong} = state;
   console.log({ latLong, locationErrorMsg });
-
+  
   useEffect(() => {
     async function setCoffeeStoresByLocation() {
       if (latLong) {
         try {
           const fetchedCoffeeStores = await fetchCoffeeStores(latLong, 30);
-          setCoffeeStores(fetchedCoffeeStores);
+          // setCoffeeStores(fetchedCoffeeStores);
+
+          dispatch({
+            type:ACTION_TYPES.SET_COFFEE_STORES,
+            payload:{
+              coffeeStores: fetchedCoffeeStores,
+            },
+          })
         } catch (error: any) {
           setCoffeeStoresError(error.message);
         }
@@ -84,7 +94,7 @@ export default function Home(props: any) {
         </div>
         <div className={styles.sectionWrapper} />
 
-        {coffeeStores.length > 0 ? (
+        {coffeeStores && coffeeStores.length > 0 ? (
           <>
             <h2 className={styles.heading2}>Stores Near Me</h2>
             <div className={styles.cardLayout}>

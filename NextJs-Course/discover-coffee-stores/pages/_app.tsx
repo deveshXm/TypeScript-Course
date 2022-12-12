@@ -4,9 +4,9 @@ import { useReducer } from "react";
 import React, { createContext } from "react";
 
 let defaultValue: any = null;
-const StoreContext = createContext(defaultValue);
+export const StoreContext = createContext(defaultValue);
 
-const ACTION_TYPES = {
+export const ACTION_TYPES = {
   SET_LAT_LONG: 'SET_LAT_LONG',
   SET_COFFEE_STORES: 'SET_COFFEE_STORES'
 }
@@ -41,9 +41,7 @@ const StoreProvider = ({ children }: any) => {
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <StoreProvider>
-      <React.Fragment>
         <Component {...pageProps} />
-      </React.Fragment>
     </StoreProvider>
   );
 }

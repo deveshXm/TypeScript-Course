@@ -9,19 +9,19 @@ class MyDocument extends Document {
           rel="preload"
           href="/fonts/IBMPlexSans-Bold.ttf"
           as="font"
-          crossOrigin="anonymous"
+          // crossOrigin="anonymous"
         />
         <Link
           rel="preload"
           href="/fonts/IBMPlexSans-Regular.ttf"
           as="font"
-          crossOrigin="anonymous"
+          // crossOrigin="anonymous"
         />
         <Link
           rel="preload"
           href="/fonts/IBMPlexSans-SemiBold.ttf"
           as="font"
-          crossOrigin="anonymous"
+          // crossOrigin="anonymous"
         />
         <Head lang="en"></Head>
         <body>
