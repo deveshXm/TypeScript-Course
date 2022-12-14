@@ -2,17 +2,20 @@ import cls from "classnames";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 
+import { isEmpty } from "../../utils";
+import { StoreContext } from "../_app";
 import fetchCoffeeStores from "../../lib/coffee-store";
 
 import styles from "../../styles/coffee-store.module.css";
 
 export async function getStaticProps({ params }: any) {
   const coffeeStore = await fetchCoffeeStores();
-  const findCoffeeStoreById = coffeeStore.find((store:any) => {
+  const findCoffeeStoreById = coffeeStore.find((store: any) => {
     return store.id.toString() === params.id;
-  })
+  });
   return {
     props: {
       coffeeStores: findCoffeeStoreById ? findCoffeeStoreById : {},
@@ -35,19 +38,36 @@ export async function getStaticPaths() {
   };
 }
 
-export default function CoffeeStore(props: any) {
+export default function CoffeeStore(initialProps: any) {
   const router = useRouter();
-
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
+  const id = router.query.id;
 
-  const { name, address, neighborhood, imgUrl } = props.coffeeStores;
+  const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore);
 
-  const handleUpvoteButtion = () => {
-    console.log("handle upvote");
+  const {
+    state: { coffeeStores },
+  } = useContext(StoreContext);
+
+  useEffect(() => {
+    if (isEmpty(initialProps.coffeeStore)) {
+      if (coffeeStores.length > 0) {
+        const findCoffeeStoreById = coffeeStores.find((coffeeStore: any) => {
+          return coffeeStore.id.toString() === id; //dynamic id
+        });
+        setCoffeeStore(findCoffeeStoreById);
+      }
+    }
+  }, [id]);
+  console.log({ coffeeStore });
+  console.log({ coffeeStores });
+  const { name, address, neighborhood, imgUrl } = coffeeStore;
+
+  const handleUpvoteButton = () => {
+    console.log("hello");
   };
-
   return (
     <div className={styles.layout}>
       <Head>
@@ -101,7 +121,7 @@ export default function CoffeeStore(props: any) {
             ></Image>
             <p className={styles.text}>1</p>
           </div>
-          <button className={styles.upvoteButton} onClick={handleUpvoteButtion}>
+          <button className={styles.upvoteButton} onClick={handleUpvoteButton}>
             Up vote!
           </button>
         </div>
