@@ -6,7 +6,7 @@ import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 
 import { isEmpty } from "../../utils";
-import { StoreContext } from "../_app";
+import { StoreContext } from "../../store/store-context";
 import fetchCoffeeStores from "../../lib/coffee-store";
 
 import styles from "../../styles/coffee-store.module.css";
@@ -61,8 +61,6 @@ export default function CoffeeStore(initialProps: any) {
       }
     }
   }, [id]);
-  console.log({ coffeeStore });
-  console.log({ coffeeStores });
   const { name, address, neighborhood, imgUrl } = coffeeStore;
 
   const handleUpvoteButton = () => {
