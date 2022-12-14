@@ -14,7 +14,7 @@ import useTrackLocation from "../hooks/use-track-location";
 import { useEffect, useState, useContext } from "react";
 import { ACTION_TYPES, StoreContext } from "./_app";
 
-const IndexProps: image = {
+const IndexProps: image = { 
   src: "/static/hero-image.png",
   width: 700,
   height: 400,
